@@ -3,11 +3,18 @@ const User = require('../models/user')
 const bcrypt = require('bcrypt')
 
 
-usersRouter.get('/', async (request, response) => {
-    const users = await User.find().populate('books', { url: 1, title: 1, author: 1 })
+booksRouter.get('/', async (request, response) => {
+    const token = getTokenFrom(request)
+    const decodedToken = jwt.verify(token, process.env.SECRET)
 
-    response.json(users)
+    if (!decodedToken.id) {
+        return response.status(401).json({ error: 'Token inválido' })
+    }
+
+    const books = await Book.find({ user: decodedToken.id }).populate('user', { username: 1, name: 1 })
+    response.json(books)
 })
+
 
 usersRouter.get('/:id', async (request, response) => {
     const user = await User.findById(request.params.id)

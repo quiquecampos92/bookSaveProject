@@ -1,5 +1,6 @@
 import React from "react";
 import { Table } from "../dataComponents/Table.jsx";
+import { AddBookForm } from "../forms/AddBookForm.jsx";
 
 export function Home() {
     const columns = [
@@ -15,6 +16,7 @@ export function Home() {
 
     return (
         <div>
+            <AddBookForm />
             <Table columns={columns} />
         </div>
     );
