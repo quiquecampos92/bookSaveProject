@@ -2,17 +2,6 @@ const mongoose = require('mongoose')
 
 mongoose.set('strictQuery', false)
 
-//no hace falta, está en app.js
-
-//const url = process.env.MONGODB_URI
-// mongoose.connect(url)
-//     .then(result => {
-//         console.log('connected to MongoDB to view books')
-//     })
-//     .catch(error => {
-//         console.log('error connecting to MongoDB:', error.message)
-//     })
-
 let bookSchema = new mongoose.Schema({
     title: {
         type: String,
