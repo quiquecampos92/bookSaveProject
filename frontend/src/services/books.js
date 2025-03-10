@@ -8,9 +8,14 @@ const setToken = newToken => {
     token = `Bearer ${newToken}`
 }
 
-const getAllBooks = () => {
-    return axios.get(basedUrl)
+const getAllBooks = async () => {
+    const config = {
+        headers: { Authorization: token },
+    }
+    const response = await axios.get(basedUrl, config)
+    return response.data
 }
+
 
 const createBook = async newObject => {
     const config = {

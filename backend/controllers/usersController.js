@@ -2,20 +2,6 @@ const usersRouter = require('express').Router()
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
 
-
-booksRouter.get('/', async (request, response) => {
-    const token = getTokenFrom(request)
-    const decodedToken = jwt.verify(token, process.env.SECRET)
-
-    if (!decodedToken.id) {
-        return response.status(401).json({ error: 'Token inválido' })
-    }
-
-    const books = await Book.find({ user: decodedToken.id }).populate('user', { username: 1, name: 1 })
-    response.json(books)
-})
-
-
 usersRouter.get('/:id', async (request, response) => {
     const user = await User.findById(request.params.id)
 

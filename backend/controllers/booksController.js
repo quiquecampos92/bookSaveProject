@@ -4,10 +4,28 @@ const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
 
+// booksRouter.get('/', async (request, response) => {
+//     const books = await Book.find().populate('user', { username: 1, name: 1 })
+//     response.json(books)
+// })
+
 booksRouter.get('/', async (request, response) => {
-    const books = await Book.find().populate('user', { username: 1, name: 1 })
+    const token = getTokenFrom(request)
+    if (!token) {
+        return response.status(401).json({ error: 'Token requerido' })
+    }
+
+    let decodedToken
+    try {
+        decodedToken = jwt.verify(token, process.env.SECRET)
+    } catch (error) {
+        return response.status(401).json({ error: 'Token inválido' })
+    }
+
+    const books = await Book.find({ user: decodedToken.id }).populate('user', { username: 1, name: 1 })
     response.json(books)
 })
+
 
 booksRouter.get('/:id', async (request, response) => {
     const bookId = request.params.id
@@ -52,7 +70,7 @@ booksRouter.post('/', async (request, response) => {
         owner,
         read,
         price,
-        user: userId
+        user: user._id
     })
 
     const savedBook = await book.save()
