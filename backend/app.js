@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
@@ -10,14 +12,6 @@ const booksRouter = require('./controllers/booksController')
 
 const app = express()
 console.log('MONGODB_URI:', config.MONGODB_URI) // Verifica el valor
-
-mongoose.connect(config.MONGODB_URI)
-    .then(() => {
-        logger.info('Connected to MongoDB in Database')
-    })
-    .catch((error) => {
-        logger.error('Error connecting to MongoDB: ', error.message)
-    })
 
 //Conecta la base de datos
 mongoose.connect(config.MONGODB_URI)
