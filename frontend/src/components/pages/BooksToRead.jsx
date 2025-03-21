@@ -1,18 +1,37 @@
-import React from "react";
-import { Table } from "../dataComponents/Table.jsx";
+import React, { useState, useEffect } from "react";
 import { Card } from "../dataComponents/Card.jsx";
+import bookService from "../../services/books.js";
+
 
 export function BooksToRead() {
-    const columns = [
-        { header: "Title", key: "title" },
-        { header: "Author", key: "author" },
-    ];
+    const [booksToRead, setBooksToRead] = useState([]);
+    const [error, setError] = useState("");
 
-    const filter = (book) => !book.read;
+    const fetchBooks = async () => {
+        try {
+            const booksData = await bookService.getAllBooks();
+            const unreadBooks = booksData.filter(book => book.read === false); // Filtra solo los no leídos
+            setBooksToRead(unreadBooks);
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                // Si el token ha expirado, redirige al login
+                localStorage.removeItem("loggedUser");
+                localStorage.removeItem("loggedUserToken");
+                window.location.href = "/login";
+            } else {
+                console.error("Error fetching books:", error);
+                setError("Error fetching books");
+            }
+        }
+    };
+
+    useEffect(() => {
+        fetchBooks();
+    }, []);
 
     return (
         <div>
-            <Card columns={columns} filter={filter} />
+            <Card books={booksToRead} error={error} />
         </div>
     );
 }

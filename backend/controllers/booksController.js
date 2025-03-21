@@ -10,6 +10,7 @@ booksRouter.use(authMiddleware)
 booksRouter.get('/', async (request, response) => {
     const userId = request.user.id // Usuario autenticado adjunto por authMiddleware
     const books = await Book.find({ user: userId }).populate('user', { username: 1, name: 1 })
+
     response.json(books)
 })
 
@@ -17,6 +18,7 @@ booksRouter.get('/', async (request, response) => {
 booksRouter.get('/:id', async (request, response) => {
     const bookId = request.params.id
     const book = await Book.findById(bookId)
+
 
     if (book) {
         response.json(book)
@@ -31,8 +33,8 @@ booksRouter.post('/', async (request, response) => {
     const userId = request.user.id // Usuario autenticado adjunto por authMiddleware
     const user = await User.findById(userId)
 
-    if (!title || !points || !read || !price) {
-        return response.status(400).json({ error: 'title, points, read and price are required' })
+    if (!title || !points || read === undefined || price === undefined) {
+        return response.status(400).json({ error: 'title, points, read and price are required' });
     }
 
     const book = new Book({
@@ -44,7 +46,7 @@ booksRouter.post('/', async (request, response) => {
         owner,
         read,
         price,
-        user: user.id
+        user: userId
     })
 
     const savedBook = await book.save()

@@ -14,7 +14,7 @@ export function LogoutButton({ logout }) {  // Cambié setUser a logout
     return (
         <button
             onClick={handleLogout}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+            className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 hover:text-slate-200 transition"
         >
             Logout
         </button>

@@ -9,7 +9,14 @@ let userSchema = new mongoose.Schema({
         unique: true // esto asegura la unicidad de username
     },
     name: String,
+    lastName: String,
     passwordHash: String,
+    bookOwners: [
+        {
+            type: String,
+            default: [],
+        }
+    ],
     books: [
         {
             type: mongoose.Schema.Types.ObjectId,

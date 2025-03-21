@@ -1,22 +1,22 @@
-import apiClient from './apiClient'; // Importa el cliente Axios configurado con interceptores
+import apiClient from './apiClient';
 
 const getAllBooks = async () => {
-    const response = await apiClient.get('/books'); // Usa el cliente Axios configurado
+    const response = await apiClient.get('/books');
     return response.data;
 };
 
-const createBook = async (newObject) => {
-    const response = await apiClient.post('/books', newObject); // Usa el cliente Axios configurado
+const createBook = async (newBook) => {
+    const response = await apiClient.post('/books', newBook);
     return response.data;
 };
 
 const updateBook = async (id, modifiedBook) => {
-    const response = await apiClient.put(`/books/${id}`, modifiedBook); // Usa el cliente Axios configurado
+    const response = await apiClient.put(`/books/${id}`, modifiedBook);
     return response.data;
 };
 
 const deleteBook = async (id) => {
-    await apiClient.delete(`/books/${id}`); // Usa el cliente Axios configurado
+    await apiClient.delete(`/books/${id}`);
 };
 
 export default {

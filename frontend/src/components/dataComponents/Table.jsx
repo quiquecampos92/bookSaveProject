@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import bookService from "../../services/books.js";
 
-export function Table({ columns, filter = null }) {
+export function Table({ columns }) {
     const [books, setBooks] = useState([]);
     const [error, setError] = useState("");
 
@@ -27,17 +27,58 @@ export function Table({ columns, filter = null }) {
     }, []);
 
     return (
-        <div className="m-10 shadow-md">
-            {error && <p className="text-red-500">{error}</p>}
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg m-10">
+            {/* Mensaje de error */}
+            {error && (
+                <div className="alert alert-error shadow-lg mb-4">
+                    <div>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="stroke-current flex-shrink-0 h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                        </svg>
+                        <span>{error}</span>
+                    </div>
+                </div>
+            )}
 
-            {books.length === 0 && !error ? (
-                <p className="text-gray-500 text-center py-4">No books available</p>
-            ) : (
-                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            {/* Mensaje si no hay libros */}
+            {books.length === 0 && !error && (
+                <div className="alert alert-info shadow-lg">
+                    <div>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            className="stroke-info flex-shrink-0 w-6 h-6"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                            ></path>
+                        </svg>
+                        <span>No books available</span>
+                    </div>
+                </div>
+            )}
+
+            {/* Tabla */}
+            {books.length > 0 && (
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                    <thead className="text-xs text-green-300 uppercase">
                         <tr>
                             {columns.map((col) => (
-                                <th key={col.key} className="px-4 py-2 text-left font-bold text-gray-700 border-b border-gray-300">
+                                <th key={col.key} scope="col" className="px-6 py-3">
                                     {col.header}
                                 </th>
                             ))}
@@ -45,9 +86,13 @@ export function Table({ columns, filter = null }) {
                     </thead>
                     <tbody>
                         {books.map((book, index) => (
-                            <tr key={book._id || book.id} className={`hover:bg-gray-500 ${index % 2 === 0 ? "bg-white" : "bg-gray-100"} border-b dark:bg-gray-800 dark:border-gray-700`}>
+                            <tr
+                                key={book._id || book.id}
+                                className={`bg-white hover:bg-green-50 border-b"
+                                    }`}
+                            >
                                 {columns.map((col) => (
-                                    <td key={col.key} className="px-4 py-2">
+                                    <td key={col.key} className="px-6 py-4">
                                         {col.format ? col.format(book[col.key]) : book[col.key]}
                                     </td>
                                 ))}

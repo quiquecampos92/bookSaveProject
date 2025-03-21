@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-    baseURL: "/api", // Ajusta esto según tu backend
+    baseURL: "/api",
 });
 
 // Interceptor de solicitud: Agrega el token al encabezado
