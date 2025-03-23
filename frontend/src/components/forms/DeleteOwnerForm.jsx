@@ -19,7 +19,7 @@ export function DeleteOwnerForm({ userId }) {
 
     useEffect(() => {
         fetchUser();
-    }, [userId]);
+    }, [user?.bookOwners]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
