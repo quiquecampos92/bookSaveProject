@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../AuthContext";
 import { Table } from "../dataComponents/Table.jsx";
-import { AddBookForm } from "../forms/AddBookForm.jsx";
+import { BookForm } from "../forms/BookForm.jsx";
 import { AddButton } from "../buttons/AddButton.jsx";
 import bookService from "../../services/books.js";
 
@@ -61,7 +61,7 @@ export function Home() {
                     onClick={() => setModalIsVisible(false)}
                 >
                     <div onClick={(e) => e.stopPropagation()}>
-                        <AddBookForm userId={user.id} setModalIsVisible={setModalIsVisible} fetchBooks={fetchBooks} />
+                        <BookForm userId={user.id} setModalIsVisible={setModalIsVisible} fetchBooks={fetchBooks} />
                     </div>
                 </div>
             )}
