@@ -1,33 +1,9 @@
 import React, { useState, useEffect } from "react";
-import bookService from "../../services/books.js";
 
-export function Table({ columns }) {
-    const [books, setBooks] = useState([]);
-    const [error, setError] = useState("");
-
-    const fetchBooks = async () => {
-        try {
-            const booksData = await bookService.getAllBooks();
-            setBooks(booksData);
-        } catch (error) {
-            if (error.response && error.response.status === 401) {
-                // Si el token ha expirado, redirige al login
-                localStorage.removeItem("loggedUser");
-                localStorage.removeItem("loggedUserToken");
-                window.location.href = "/login";
-            } else {
-                console.error("Error fetching books:", error);
-                setError("Error fetching books");
-            }
-        }
-    };
-
-    useEffect(() => {
-        fetchBooks();
-    }, []);
+export function Table({ columns, filter, modalIsVisible, books, error }) {
 
     return (
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg m-10">
+        <div className={`relative overflow-x-auto shadow-md sm:rounded-lg m-10 ${modalIsVisible ? 'blur-sm' : ''}`}>
             {/* Mensaje de error */}
             {error && (
                 <div className="alert alert-error shadow-lg mb-4">

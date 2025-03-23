@@ -1,11 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../AuthContext";
 import { Table } from "../dataComponents/Table.jsx";
 import { AddBookForm } from "../forms/AddBookForm.jsx";
 import { AddButton } from "../buttons/AddButton.jsx";
+import bookService from "../../services/books.js";
 
 export function Home() {
     const { user } = useContext(AuthContext);
+    const [books, setBooks] = useState([]);
+    const [error, setError] = useState("");
     const [modalIsVisible, setModalIsVisible] = useState(false)
 
     const columns = [
@@ -19,7 +22,26 @@ export function Home() {
         { header: "Owner", key: "owner" },
     ];
 
+    const fetchBooks = async () => {
+        try {
+            const booksData = await bookService.getAllBooks();
+            setBooks(booksData);
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                // Si el token ha expirado, redirige al login
+                localStorage.removeItem("loggedUser");
+                localStorage.removeItem("loggedUserToken");
+                window.location.href = "/login";
+            } else {
+                console.error("Error fetching books:", error);
+                setError("Error fetching books");
+            }
+        }
+    };
 
+    useEffect(() => {
+        fetchBooks();
+    }, []);
 
     const handleAddButton = () => {
         setModalIsVisible(true)
@@ -39,12 +61,12 @@ export function Home() {
                     onClick={() => setModalIsVisible(false)}
                 >
                     <div onClick={(e) => e.stopPropagation()}>
-                        <AddBookForm closeModal={() => setModalIsVisible(false)} />
+                        <AddBookForm setModalIsVisible={setModalIsVisible} fetchBooks={fetchBooks} />
                     </div>
                 </div>
             )}
 
-            <Table columns={columns} />
+            <Table columns={columns} modalIsVisible={modalIsVisible} books={books} error={error} />
         </div>
     );
 }
