@@ -61,7 +61,7 @@ export function Home() {
                     onClick={() => setModalIsVisible(false)}
                 >
                     <div onClick={(e) => e.stopPropagation()}>
-                        <AddBookForm setModalIsVisible={setModalIsVisible} fetchBooks={fetchBooks} />
+                        <AddBookForm userId={user.id} setModalIsVisible={setModalIsVisible} fetchBooks={fetchBooks} />
                     </div>
                 </div>
             )}
