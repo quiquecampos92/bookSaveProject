@@ -1,6 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { BookForm } from "../forms/BookForm";
 
-export function Table({ columns, filter, modalIsVisible, books, error }) {
+export function Table({ userId, fetchBooks, columns, modalIsVisible, books, error }) {
+    const [openBook, setOpenBook] = useState(false);
+    const [selectedBook, setSelectedBook] = useState(null);
+
+
+    const handleBookClick = (book) => {
+        setSelectedBook(book);
+        setOpenBook(true);
+    };
 
     return (
         <div className={`relative overflow-x-auto shadow-md sm:rounded-lg m-10 ${modalIsVisible ? 'blur-sm' : ''}`}>
@@ -28,23 +37,8 @@ export function Table({ columns, filter, modalIsVisible, books, error }) {
 
             {/* Mensaje si no hay libros */}
             {books.length === 0 && !error && (
-                <div className="alert alert-info shadow-lg">
-                    <div>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            className="stroke-info flex-shrink-0 w-6 h-6"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                            ></path>
-                        </svg>
-                        <span>No books available</span>
-                    </div>
+                <div className="text-center">
+                    <h1 className="text-xl font-bold text-gray-500">No books available yet.</h1>
                 </div>
             )}
 
@@ -64,8 +58,8 @@ export function Table({ columns, filter, modalIsVisible, books, error }) {
                         {books.map((book, index) => (
                             <tr
                                 key={book._id || book.id}
-                                className={`bg-white hover:bg-green-50 border-b"
-                                    }`}
+                                onClick={() => handleBookClick(book)}
+                                className={`bg-white cursor-pointer hover:bg-green-50 border-b`}
                             >
                                 {columns.map((col) => (
                                     <td key={col.key} className="px-6 py-4">
@@ -76,6 +70,16 @@ export function Table({ columns, filter, modalIsVisible, books, error }) {
                         ))}
                     </tbody>
                 </table>
+            )}
+            {openBook && (
+                <div
+                    className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
+                    onClick={() => setOpenBook(false)}
+                >
+                    <div onClick={(e) => e.stopPropagation()}>
+                        <BookForm userId={userId} setModalIsVisible={setOpenBook} fetchBooks={fetchBooks} selectedBook={selectedBook} />
+                    </div>
+                </div>
             )}
         </div>
     );

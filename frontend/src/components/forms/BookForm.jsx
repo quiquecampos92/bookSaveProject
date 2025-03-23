@@ -5,7 +5,7 @@ import usersService from '../../services/users';
 
 
 
-export function BookForm({ userId, setModalIsVisible, fetchBooks }) {
+export function BookForm({ userId, setModalIsVisible, selectedBook, fetchBooks }) {
     const [user, setUser] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
 
@@ -24,14 +24,14 @@ export function BookForm({ userId, setModalIsVisible, fetchBooks }) {
     }, []);
 
     const [formData, setFormData] = useState({
-        title: "",
-        author: "",
-        points: 1,
-        review: "",
-        reading_Date: "",
-        owner: "",
-        read: false,
-        price: 0,
+        title: selectedBook?.title || "",
+        author: selectedBook?.author || "",
+        points: selectedBook?.points || 1,
+        review: selectedBook?.review || "",
+        reading_Date: selectedBook?.reading_Date || "",
+        owner: selectedBook?.owner || "",
+        read: selectedBook?.read || false,
+        price: selectedBook?.price || 0,
     });
 
     const handleChange = (e) => {
@@ -65,7 +65,31 @@ export function BookForm({ userId, setModalIsVisible, fetchBooks }) {
             fetchBooks();
         }
         catch (error) {
-            setErrorMessage('Algo ha salido mal.');
+            setErrorMessage('Algo ha salido mal. No se ha podido registrar el libro');
+            setTimeout(() => {
+                setErrorMessage(null);
+            }, 5000);
+        }
+    };
+    const handleDelete = async () => {
+        try {
+            await booksService.deleteBook(selectedBook.id);
+            setModalIsVisible(false);
+            fetchBooks();
+            setFormData(
+                {
+                    title: "",
+                    author: "",
+                    points: 1,
+                    review: "",
+                    reading_Date: "",
+                    owner: "",
+                    read: false,
+                    price: 0,
+                }
+            )
+        } catch (error) {
+            setErrorMessage('Algo ha salido mal. No se ha podido eliminar el libro');
             setTimeout(() => {
                 setErrorMessage(null);
             }, 5000);
@@ -192,8 +216,11 @@ export function BookForm({ userId, setModalIsVisible, fetchBooks }) {
                 </div>
 
 
-                <div className="col-span-2">
+                <div className="col-span-2 flex items-center justify-between gap-8">
                     <AddButton handleAddButton={handleSubmit} text="Save book" style="bg-white border-2 border-orange-500 hover:bg-orange-500 transition text-orange-500 hover:text-white px-4 py-2 rounded w-full" type="submit" />
+                    {selectedBook && (
+                        <AddButton handleAddButton={handleDelete} text="Delete book" style="bg-white border-2 border-orange-500 hover:bg-orange-500 transition text-orange-500 hover:text-white px-4 py-2 rounded w-full" type="button" />
+                    )}
                 </div>
             </form>
         </div>

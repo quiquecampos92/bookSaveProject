@@ -60,7 +60,7 @@ export function MyBooks() {
                 </div>
             )}
 
-            <Table columns={columns} filter={filter} modalIsVisible={modalIsVisible} setModalIsVisible={setModalIsVisible} books={books} error={error} />
+            <Table userId={user.id} fetchBooks={fetchBooks} columns={columns} filter={filter} modalIsVisible={modalIsVisible} setModalIsVisible={setModalIsVisible} books={books} error={error} />
         </>
     );
 }

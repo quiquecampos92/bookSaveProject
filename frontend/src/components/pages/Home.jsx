@@ -66,7 +66,7 @@ export function Home() {
                 </div>
             )}
 
-            <Table columns={columns} modalIsVisible={modalIsVisible} books={books} error={error} />
+            <Table userId={user.id} fetchBooks={fetchBooks} columns={columns} modalIsVisible={modalIsVisible} books={books} error={error} />
         </div>
     );
 }

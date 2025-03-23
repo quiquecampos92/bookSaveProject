@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../AuthContext";
 import { Table } from "../dataComponents/Table.jsx";
 import bookService from "../../services/books.js";
 
 export function ReadBooks() {
+    const { user } = useContext(AuthContext);
     const [readBooks, setReadBooks] = useState([]);
     const [error, setError] = useState("");
 
@@ -43,7 +45,7 @@ export function ReadBooks() {
 
     return (
         <div>
-            <Table columns={columns} filter={filter} books={readBooks} error={error} />
+            <Table userId={user.id} fetchBooks={fetchBooks} columns={columns} books={readBooks} error={error} />
         </div>
     );
 }
