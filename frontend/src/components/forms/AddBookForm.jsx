@@ -4,7 +4,7 @@ import { AddButton } from '../buttons/AddButton';
 import booksService from "../../services/books";
 
 
-export function AddBookForm() {
+export function AddBookForm({ setModalIsVisible, fetchBooks }) {
     const { user } = useContext(AuthContext);
     const [errorMessage, setErrorMessage] = useState(null);
 
@@ -46,6 +46,8 @@ export function AddBookForm() {
                     price: 0,
                 }
             )
+            setModalIsVisible(false)
+            fetchBooks();
         }
         catch (error) {
             setErrorMessage('Algo ha salido mal.');
@@ -85,26 +87,6 @@ export function AddBookForm() {
                         className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
                     />
                 </div>
-
-                {/* <div>
-                    <label className="block text-white">Owner</label>
-                    <input
-                        type="text"
-                        name="owner"
-                        value={formData.owner}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
-                    />
-                </div> */}
-                {/* <div>
-                    <label className="block text-white">Owner</label>
-                    <select name="owner" onChange={handleChange}>
-                        {user.bookOwners.map(owner => (
-                            <option key={owner} value={owner}>{owner}</option>
-                        ))}
-                    </select>
-                </div> */}
-
 
                 <div>
                     <label className="block text-white">Points (1-5)</label>
