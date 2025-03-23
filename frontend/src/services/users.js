@@ -1,5 +1,14 @@
 import apiClient from './apiClient';
 
+const getUser = async (userId) => {
+    try {
+        const response = await apiClient.get(`/users/${userId}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error getting user:", error.response?.data || error.message);
+    }
+};
+
 const createUser = async (userData) => {
     const response = await apiClient.post('/users', userData);
     return response.data;
@@ -26,6 +35,7 @@ const deleteOwner = async (ownerName, userId) => {
 
 
 export default {
+    getUser,
     createUser,
     createOwner,
     deleteOwner,
