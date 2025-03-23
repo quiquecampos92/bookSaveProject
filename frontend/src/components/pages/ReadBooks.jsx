@@ -3,7 +3,7 @@ import { Table } from "../dataComponents/Table.jsx";
 import bookService from "../../services/books.js";
 
 export function ReadBooks() {
-    const [books, setBooks] = useState([]);
+    const [readBooks, setReadBooks] = useState([]);
     const [error, setError] = useState("");
 
     const columns = [
@@ -20,7 +20,8 @@ export function ReadBooks() {
     const fetchBooks = async () => {
         try {
             const booksData = await bookService.getAllBooks();
-            setBooks(booksData);
+            const readBooksData = booksData.filter(book => book.read === true);
+            setReadBooks(readBooksData);
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 // Si el token ha expirado, redirige al login
@@ -42,7 +43,7 @@ export function ReadBooks() {
 
     return (
         <div>
-            <Table columns={columns} filter={filter} books={books} error={error} />
+            <Table columns={columns} filter={filter} books={readBooks} error={error} />
         </div>
     );
 }
