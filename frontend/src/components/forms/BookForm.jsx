@@ -5,7 +5,7 @@ import usersService from '../../services/users';
 
 
 
-export function AddBookForm({ userId, setModalIsVisible, fetchBooks }) {
+export function BookForm({ userId, setModalIsVisible, fetchBooks }) {
     const [user, setUser] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
 
