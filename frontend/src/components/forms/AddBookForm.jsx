@@ -1,12 +1,27 @@
-import React, { useState, useContext } from 'react';
-import { AuthContext } from '../../AuthContext';
+import React, { useState, useEffect } from 'react';
 import { AddButton } from '../buttons/AddButton';
 import booksService from "../../services/books";
+import usersService from '../../services/users';
 
 
-export function AddBookForm({ setModalIsVisible, fetchBooks }) {
-    const { user } = useContext(AuthContext);
+
+export function AddBookForm({ userId, setModalIsVisible, fetchBooks }) {
+    const [user, setUser] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
+
+    const fetchUser = async () => {
+        try {
+            const userData = await usersService.getUser(userId);
+            setUser(userData);
+            console.log(userData);
+        } catch (err) {
+            console.error("Error fetching user:", err);
+        }
+    };
+
+    useEffect(() => {
+        fetchUser();
+    }, []);
 
     const [formData, setFormData] = useState({
         title: "",
@@ -77,7 +92,7 @@ export function AddBookForm({ setModalIsVisible, fetchBooks }) {
                     />
                 </div>
 
-                <div>
+                <div className="col-span-2">
                     <label className="block text-white">Author</label>
                     <input
                         type="text"
@@ -85,6 +100,39 @@ export function AddBookForm({ setModalIsVisible, fetchBooks }) {
                         value={formData.author}
                         onChange={handleChange}
                         className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-white">Owner</label>
+                    <select
+                        id="ownerName"
+                        name="owner"
+                        value={formData.owner}
+                        onChange={(e) => setFormData({ ...formData, owner: e.target.value })}
+                        className="w-full h-10 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
+                    >
+
+                        <option value="">Select an owner</option>
+                        {user && user.bookOwners ? (
+                            user.bookOwners.map(owner => (
+                                <option key={owner.id} value={owner}>{owner}</option>
+                            ))
+                        ) : (
+                            <option disabled>Loading owners...</option>
+                        )}
+                    </select>
+
+                </div>
+
+                <div>
+                    <label className="block text-white">Reading Date</label>
+                    <input
+                        type="date"
+                        name="reading_Date"
+                        value={formData.reading_Date}
+                        onChange={handleChange}
+                        className="w-full h-10 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
                     />
                 </div>
 
@@ -102,16 +150,7 @@ export function AddBookForm({ setModalIsVisible, fetchBooks }) {
                     />
                 </div>
 
-                <div>
-                    <label className="block text-white">Reading Date</label>
-                    <input
-                        type="date"
-                        name="reading_Date"
-                        value={formData.reading_Date}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
-                    />
-                </div>
+
 
                 <div>
                     <label className="block text-white">Price</label>
