@@ -13,7 +13,6 @@ export function BookForm({ userId, setModalIsVisible, selectedBook, fetchBooks }
         try {
             const userData = await usersService.getUser(userId);
             setUser(userData);
-            console.log(userData);
         } catch (err) {
             console.error("Error fetching user:", err);
         }
@@ -47,7 +46,6 @@ export function BookForm({ userId, setModalIsVisible, selectedBook, fetchBooks }
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log("Libro registrado:", formData);
             await booksService.createBook(formData)
             setFormData(
                 {
