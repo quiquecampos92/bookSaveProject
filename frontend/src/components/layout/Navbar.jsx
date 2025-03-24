@@ -14,7 +14,7 @@ export function Navbar() {
 
     return (
         <>
-            <nav className=" px-5">
+            <nav className="px-5">
                 <div className="flex items-center justify-center max-w-screen-xl pl-4 py-3">
                     <ul className="flex flex-row font-medium mt-0 space-x-8 text-md">
                         {links
