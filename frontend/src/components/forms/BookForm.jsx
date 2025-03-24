@@ -138,7 +138,7 @@ export function BookForm({ userId, setModalIsVisible, selectedBook, fetchBooks }
                         <option value="">Select an owner</option>
                         {user && user.bookOwners ? (
                             user.bookOwners.map(owner => (
-                                <option key={owner.id} value={owner}>{owner}</option>
+                                <option key={owner} value={owner}>{owner}</option>
                             ))
                         ) : (
                             <option disabled>Loading owners...</option>
