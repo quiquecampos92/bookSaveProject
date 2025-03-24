@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import usersService from '../../services/users';
 import { AddButton } from '../buttons/AddButton';
 
@@ -27,7 +27,16 @@ export function AddOwnerForm({ userId }) {
         }
     };
 
+    useEffect(() => {
+        if (error || success) {
+            const timer = setTimeout(() => {
+                setError('');
+                setSuccess('');
+            }, 2000);
 
+            return () => clearTimeout(timer);
+        }
+    }, [error, success]);
     return (
         <div className="bg-white shadow-md w-96 shadow-green-300 rounded-lg p-6">
             <h3 className="text-gray-700 text-2xl font-bold mb-4 text-center">Add Owner</h3>

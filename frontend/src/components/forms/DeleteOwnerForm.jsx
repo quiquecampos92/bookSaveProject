@@ -30,7 +30,6 @@ export function DeleteOwnerForm({ userId }) {
 
         try {
             await usersService.deleteOwner(ownerName, userId);
-
             setSuccess('Owner deleted successfully');
             setError('');
             setOwnerName('');
@@ -40,6 +39,17 @@ export function DeleteOwnerForm({ userId }) {
             console.error("Error in handleSubmit:", err);
         }
     };
+
+    useEffect(() => {
+        if (error || success) {
+            const timer = setTimeout(() => {
+                setError('');
+                setSuccess('');
+            }, 2000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [error, success]);
 
     return (
         <div className="bg-white shadow-md w-96 shadow-green-300 rounded-lg p-6">
@@ -61,8 +71,8 @@ export function DeleteOwnerForm({ userId }) {
                 </div>
                 <AddButton type="submit" text="Delete Owner" style="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 my-5 rounded" />
             </form>
-            {error && <p className="text-red-500 mt-2" >{error}</p>}
-            {success && <p className="text-green-500 mt-2" >{success}</p>}
+            {error && <p className="text-red-500 mt-2">{error}</p>}
+            {success && <p className="text-green-500 mt-2">{success}</p>}
         </div>
     );
 };
