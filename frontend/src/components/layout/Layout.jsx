@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Navbar2 } from "./Navbar2";
+import { Navbar } from "./Navbar";
+import { Header } from "./Header";
 
 export function Layout({ children }) {
     const [filteredBooks, setFilteredBooks] = useState(null);
@@ -10,7 +11,8 @@ export function Layout({ children }) {
 
     return (
         <>
-            <Navbar2 onSearch={handleSearch} />
+            <Header onSearch={handleSearch} />
+            <Navbar />
             <main >
                 {React.cloneElement(children, { filteredBooks })}
             </main>
