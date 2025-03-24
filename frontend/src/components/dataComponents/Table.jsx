@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { BookForm } from "../forms/BookForm";
 
-export function Table({ userId, fetchBooks, columns, modalIsVisible, books, error }) {
+export function Table({ userId, fetchBooks, filteredBooks, columns, modalIsVisible, books, error }) {
     const [openBook, setOpenBook] = useState(false);
     const [selectedBook, setSelectedBook] = useState(null);
-
 
     const handleBookClick = (book) => {
         setSelectedBook(book);
@@ -41,36 +40,68 @@ export function Table({ userId, fetchBooks, columns, modalIsVisible, books, erro
                     <h1 className="text-xl font-bold text-gray-500">No books available yet.</h1>
                 </div>
             )}
-
-            {/* Tabla */}
-            {books.length > 0 && (
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
-                    <thead className="text-xs text-green-300 uppercase">
-                        <tr>
-                            {columns.map((col) => (
-                                <th key={col.key} scope="col" className="px-6 py-3">
-                                    {col.header}
-                                </th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {books.map((book, index) => (
-                            <tr
-                                key={book._id || book.id}
-                                onClick={() => handleBookClick(book)}
-                                className={`bg-white cursor-pointer hover:bg-green-50 border-b`}
-                            >
+            {filteredBooks ?
+                filteredBooks.length > 0 && (
+                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                        <thead className="text-xs text-green-300 uppercase">
+                            <tr>
                                 {columns.map((col) => (
-                                    <td key={col.key} className="px-6 py-4">
-                                        {col.format ? col.format(book[col.key]) : book[col.key]}
-                                    </td>
+                                    <th key={col.key} scope="col" className="px-6 py-3">
+                                        {col.header}
+                                    </th>
                                 ))}
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            )}
+                        </thead>
+                        <tbody>
+                            {filteredBooks.map((book, index) => (
+                                <tr
+                                    key={book._id || book.id}
+                                    onClick={() => handleBookClick(book)}
+                                    className={`bg-white cursor-pointer hover:bg-green-50 border-b`}
+                                >
+                                    {columns.map((col) => (
+                                        <td key={col.key} className="px-6 py-4">
+                                            {col.format ? col.format(book[col.key]) : book[col.key]}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )
+                :
+
+                books.length > 0 && (
+                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                        <thead className="text-xs text-green-300 uppercase">
+                            <tr>
+                                {columns.map((col) => (
+                                    <th key={col.key} scope="col" className="px-6 py-3">
+                                        {col.header}
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {books.map((book, index) => (
+                                <tr
+                                    key={book._id || book.id}
+                                    onClick={() => handleBookClick(book)}
+                                    className={`bg-white cursor-pointer hover:bg-green-50 border-b`}
+                                >
+                                    {columns.map((col) => (
+                                        <td key={col.key} className="px-6 py-4">
+                                            {col.format ? col.format(book[col.key]) : book[col.key]}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )
+            }
+
+
             {openBook && (
                 <div
                     className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"

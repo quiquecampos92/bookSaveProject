@@ -5,7 +5,7 @@ import { BookForm } from "../forms/BookForm.jsx";
 import { AddButton } from "../buttons/AddButton.jsx";
 import bookService from "../../services/books.js";
 
-export function Home() {
+export function Home({ filteredBooks }) {
     const { user } = useContext(AuthContext);
     const [books, setBooks] = useState([]);
     const [error, setError] = useState("");
@@ -66,7 +66,7 @@ export function Home() {
                 </div>
             )}
 
-            <Table userId={user.id} fetchBooks={fetchBooks} columns={columns} modalIsVisible={modalIsVisible} books={books} error={error} />
+            <Table userId={user.id} fetchBooks={fetchBooks} filteredBooks={filteredBooks} columns={columns} modalIsVisible={modalIsVisible} books={books} error={error} />
         </div>
     );
 }

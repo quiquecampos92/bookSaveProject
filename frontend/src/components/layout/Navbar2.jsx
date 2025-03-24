@@ -1,15 +1,13 @@
-// Navbar2.jsx
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SearchTerm } from '../forms/SearchTerm.jsx';
 import fullLogo from '../../assets/booksavewhiterow.png';
 import { LogoutButton } from "../buttons/LogoutButton.jsx";
 import { AuthContext } from "../../AuthContext.jsx";
 
-
-export function Navbar2() {
+export function Navbar2({ onSearch }) {
     const { user, logout } = useContext(AuthContext);
-    const location = useLocation(); // Obtiene la ruta actual
+    const location = useLocation();
 
     const links = [
         { name: 'HOME', path: '/books' },
@@ -25,7 +23,7 @@ export function Navbar2() {
                     <Link to="/books">
                         <img src={fullLogo} alt="logo booksave" className="w-32" />
                     </Link>
-                    <SearchTerm />
+                    <SearchTerm onSearch={onSearch} />
                     <LogoutButton logout={logout} />
                 </div>
 

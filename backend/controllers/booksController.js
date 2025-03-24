@@ -27,6 +27,29 @@ booksRouter.get('/:id', async (request, response) => {
     }
 })
 
+// Obtener un libro filtrado
+booksRouter.get('/search/:searchTerm', async (request, response) => {
+    const searchTerm = request.params.searchTerm;
+    const books = await Book.find({
+        $or: [
+            { title: { $regex: searchTerm, $options: "i" } },
+            { author: { $regex: searchTerm, $options: "i" } },
+            { review: { $regex: searchTerm, $options: "i" } },
+            { owner: { $regex: searchTerm, $options: "i" } }
+
+
+        ]
+    });
+
+    console.log(books)
+    if (books) {
+        response.json(books)
+
+    } else {
+        response.status(404).end()
+    }
+})
+
 // Crear un nuevo libro
 booksRouter.post('/', async (request, response) => {
     const { title, author, points, review, reading_Date, owner, read, price } = request.body
