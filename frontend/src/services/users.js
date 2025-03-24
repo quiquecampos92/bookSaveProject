@@ -18,7 +18,7 @@ const createOwner = async (ownerName, userId) => {
 
     try {
         const response = await apiClient.post(`/users/${userId}/owners`, { ownerName });
-        return response.data;  // Esto devuelve la lista de owners del usuario actualizado.
+        return response.data;
     } catch (error) {
         console.error("Error creating owner:", error.response?.data || error.message);
     }
@@ -26,8 +26,8 @@ const createOwner = async (ownerName, userId) => {
 
 const deleteOwner = async (ownerName, userId) => {
     try {
-        const response = await apiClient.delete(`/users/${userId}/owners/${ownerName}`);
-        return response.data;  // Esto devuelve la lista de owners actualizada del usuario.
+        await apiClient.delete(`/users/${userId}/owners/${ownerName}`);// esto esta mal
+
     } catch (error) {
         console.error("Error deleting owner:", error.response?.data || error.message);
     }

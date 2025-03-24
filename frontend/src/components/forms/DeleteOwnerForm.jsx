@@ -29,8 +29,7 @@ export function DeleteOwnerForm({ userId }) {
         }
 
         try {
-            const ownerDeleted = await usersService.deleteOwner(ownerName, userId);// esto esta para mirar si esta bien
-            console.log('Owner deleted: ', ownerDeleted);
+            await usersService.deleteOwner(ownerName, userId);
 
             setSuccess('Owner deleted successfully');
             setError('');
@@ -56,7 +55,7 @@ export function DeleteOwnerForm({ userId }) {
                     >
                         <option value="">Select an owner</option>
                         {user?.bookOwners.map(owner => (
-                            <option key={owner.id} value={owner}>{owner}</option>
+                            <option key={owner} value={owner}>{owner}</option>
                         ))}
                     </select>
                 </div>

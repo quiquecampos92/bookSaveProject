@@ -85,7 +85,7 @@ usersRouter.post('/:id/owners', async (req, res) => {
 });
 
 // Elimina un owner existente
-usersRouter.delete('/user/:id/owners/:ownerName', async (req, res) => {
+usersRouter.delete('/:id/owners/:ownerName', async (req, res) => {
     const { id, ownerName } = req.params;
 
     const user = await User.findById(id);
