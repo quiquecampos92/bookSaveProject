@@ -11,15 +11,16 @@ export function Layout({ children }) {
     }
 
     return (
-        <>
-            <div className='sticky bg-white bg-opacity-80 top-0 z-50'>
+        <div className="flex flex-col min-h-screen">
+            <div className="sticky bg-white bg-opacity-80 top-0 z-50">
                 <Header onSearch={handleSearch} />
                 <Navbar />
             </div>
-            <main >
+            <main className="flex-1">
                 {React.cloneElement(children, { filteredBooks })}
             </main>
             <Footer />
-        </>
+        </div>
+
     )
 }
