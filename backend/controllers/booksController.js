@@ -29,26 +29,31 @@ booksRouter.get('/:id', async (request, response) => {
 
 // Obtener un libro filtrado
 booksRouter.get('/search/:searchTerm', async (request, response) => {
+    const userId = request.user.id;
     const searchTerm = request.params.searchTerm;
-    const books = await Book.find({
-        $or: [
-            { title: { $regex: searchTerm, $options: "i" } },
-            { author: { $regex: searchTerm, $options: "i" } },
-            { review: { $regex: searchTerm, $options: "i" } },
-            { owner: { $regex: searchTerm, $options: "i" } }
 
+    try {
+        const books = await Book.find({
+            user: userId,
+            $or: [
+                { title: { $regex: searchTerm, $options: "i" } },
+                { author: { $regex: searchTerm, $options: "i" } },
+                { review: { $regex: searchTerm, $options: "i" } },
+                { owner: { $regex: searchTerm, $options: "i" } }
+            ]
+        }).populate('user', { username: 1, name: 1 });
 
-        ]
-    });
-
-    console.log(books)
-    if (books) {
-        response.json(books)
-
-    } else {
-        response.status(404).end()
+        if (books.length > 0) {
+            response.json(books);
+        } else {
+            response.status(404).json({ message: "No books found" });
+        }
+    } catch (error) {
+        console.error(error);
+        response.status(500).json({ message: "Internal server error" });
     }
-})
+});
+
 
 // Crear un nuevo libro
 booksRouter.post('/', async (request, response) => {
