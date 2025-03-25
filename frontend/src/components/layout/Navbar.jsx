@@ -9,7 +9,7 @@ export function Navbar() {
         { name: 'HOME', path: '/books' },
         { name: 'READ BOOKS', path: '/readbooks' },
         { name: 'BOOKS TO READ', path: '/bookstoread' },
-        { name: 'MY BOOKS', path: '/selectbooksbyowners' },
+        { name: 'BOOKS BY OWNERS', path: '/selectbooksbyowners' },
     ];
 
     return (
