@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Navbar } from "./Navbar";
 import { Header } from "./Header";
+import { Footer } from "./Footer";
 
 export function Layout({ children }) {
     const [filteredBooks, setFilteredBooks] = useState(null);
@@ -18,6 +19,7 @@ export function Layout({ children }) {
             <main >
                 {React.cloneElement(children, { filteredBooks })}
             </main>
+            <Footer />
         </>
     )
 }
