@@ -6,7 +6,7 @@ import { Layout } from "./components/layout/Layout";
 import { Home } from "./components/pages/Home";
 import { ReadBooks } from "./components/pages/ReadBooks";
 import { BooksToRead } from "./components/pages/BooksToRead";
-import { MyBooks } from "./components/pages/MyBooks";
+import { SelectBooksByOwners } from "./components/pages/SelectBooksByOwners";
 import { Login } from "./components/pages/Login";
 import { Signup } from "./components/pages/Signup";
 import { AuthProvider, AuthContext } from "./AuthContext";
@@ -47,10 +47,10 @@ function AppRoutes() {
           </Layout>
         </PrivateRoute>
       } />
-      <Route path="/mybooks" element={
+      <Route path="/selectbooksbyowners" element={
         <PrivateRoute>
           <Layout>
-            <MyBooks />
+            <SelectBooksByOwners />
           </Layout>
         </PrivateRoute>
       } />
