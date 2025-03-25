@@ -10,6 +10,10 @@ export function SearchTerm({ onSearch }) {
     const handleSearch = async (e) => {
         e.preventDefault();
         try {
+            if (searchTerm === "") {
+                onSearch(null);
+                return;
+            }
             const filteredBooks = await bookService.getFilteredBooks(searchTerm)
             onSearch(filteredBooks)
         } catch (error) {
