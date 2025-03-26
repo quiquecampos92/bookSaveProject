@@ -12,7 +12,7 @@ export function Layout({ children }) {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <div className="sticky bg-white bg-opacity-80 top-0 z-50">
+            <div className="sticky bg-white bg-opacity-70 backdrop-blur-sm top-0 z-50">
                 <Header onSearch={handleSearch} />
                 <Navbar />
             </div>
@@ -21,6 +21,5 @@ export function Layout({ children }) {
             </main>
             <Footer />
         </div>
-
     )
 }
