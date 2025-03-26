@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Card } from "../dataComponents/Card.jsx";
+import { GradientCard } from "../dataComponents/GradientCard.jsx";
 import bookService from "../../services/books.js";
-
 
 export function BooksToRead() {
     const [booksToRead, setBooksToRead] = useState([]);
@@ -31,7 +30,7 @@ export function BooksToRead() {
 
     return (
         <div>
-            <Card books={booksToRead} error={error} />
+            <GradientCard books={booksToRead} error={error} />
         </div>
     );
 }
