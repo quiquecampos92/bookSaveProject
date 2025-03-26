@@ -29,8 +29,17 @@ export function BooksToRead() {
     }, []);
 
     return (
-        <div>
-            <GradientCard books={booksToRead} error={error} />
+        // <div>
+        //     <GradientCard books={booksToRead} error={error} />
+        // </div>
+        <div className="flex flex-wrap gap-6 mx-4 mt-4 justify-center">
+            {!booksToRead || booksToRead.length === 0 ? (
+                <p>No hay libros que quieras leer</p>
+            ) : (
+                booksToRead.map((book) => (
+                    <GradientCard key={book.id} book={book} />
+                ))
+            )}
         </div>
     );
 }
