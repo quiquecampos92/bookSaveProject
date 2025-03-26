@@ -11,7 +11,7 @@ booksRouter.get('/', async (request, response) => {
     const userId = request.user.id // Usuario autenticado adjunto por authMiddleware
     const books = await Book.find({ user: userId }).populate('user', { username: 1, name: 1 })
 
-    response.json(books)
+    response.json(books.reverse())
 })
 
 // Obtener un libro específico
@@ -21,7 +21,7 @@ booksRouter.get('/:id', async (request, response) => {
 
 
     if (book) {
-        response.json(book)
+        response.json(book.reverse())
     } else {
         response.status(404).end()
     }
