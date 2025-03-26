@@ -43,7 +43,7 @@ export function Table({ userId, fetchBooks, filteredBooks, columns, modalIsVisib
             {filteredBooks ?
                 filteredBooks.length > 0 && (
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
-                        <thead className="text-xs text-green-300 uppercase">
+                        <thead className="text-sm 2xl:text-lg text-green-300 uppercase">
                             <tr>
                                 {columns.map((col) => (
                                     <th key={col.key} scope="col" className="px-6 py-3">
@@ -72,8 +72,8 @@ export function Table({ userId, fetchBooks, filteredBooks, columns, modalIsVisib
                 :
 
                 books.length > 0 && (
-                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
-                        <thead className="text-xs text-green-300 uppercase">
+                    <table className="w-full text-left rtl:text-right text-gray-500 ">
+                        <thead className="text-sm 2xl:text-lg text-green-300 uppercase">
                             <tr>
                                 {columns.map((col) => (
                                     <th key={col.key} scope="col" className="px-6 py-3">
@@ -90,7 +90,7 @@ export function Table({ userId, fetchBooks, filteredBooks, columns, modalIsVisib
                                     className={`bg-white cursor-pointer hover:bg-green-50 border-b`}
                                 >
                                     {columns.map((col) => (
-                                        <td key={col.key} className="px-6 py-4">
+                                        <td key={col.key} className="px-6 text-sm py-4">
                                             {col.format ? col.format(book[col.key]) : book[col.key]}
                                         </td>
                                     ))}
