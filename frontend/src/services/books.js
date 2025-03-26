@@ -22,8 +22,14 @@ const createBook = async (newBook) => {
 };
 
 const updateBook = async (id, modifiedBook) => {
-    const response = await apiClient.put(`/books/${id}`, modifiedBook);
-    return response.data;
+    try {
+        const response = await apiClient.put(`/books/${id}`, modifiedBook);
+        return response.data;
+    } catch (error) {
+        console.error("Error en la búsqueda:", error);
+        return [];
+    }
+
 };
 
 const deleteBook = async (id) => {
