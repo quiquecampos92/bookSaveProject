@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GradientCard } from "../dataComponents/GradientCard.jsx";
-import bookService from "../../services/books.js";
+import booksService from "../../services/books.js";
 
 export function BooksToRead() {
     const [booksToRead, setBooksToRead] = useState([]);
@@ -8,12 +8,11 @@ export function BooksToRead() {
 
     const fetchBooks = async () => {
         try {
-            const booksData = await bookService.getAllBooks();
-            const unreadBooks = booksData.filter(book => book.read === false); // Filtra solo los no leídos
+            const booksData = await booksService.getAllBooks();
+            const unreadBooks = booksData.filter(book => book.read === false);
             setBooksToRead(unreadBooks);
         } catch (error) {
             if (error.response && error.response.status === 401) {
-                // Si el token ha expirado, redirige al login
                 localStorage.removeItem("loggedUser");
                 localStorage.removeItem("loggedUserToken");
                 window.location.href = "/login";
@@ -28,16 +27,32 @@ export function BooksToRead() {
         fetchBooks();
     }, []);
 
+    const handleButton = async (book) => {
+        try {
+            const updatedBook = { ...book, read: true };
+            await booksService.updateBook(book.id, updatedBook);
+
+            setBooksToRead(prevBooks => prevBooks.filter(b => b.id !== book.id));
+        } catch (error) {
+            setError('Algo ha salido mal. No se ha podido marcar el libro como leído.');
+            setTimeout(() => {
+                setError(null);
+            }, 5000);
+        }
+    }
+
     return (
-        // <div>
-        //     <GradientCard books={booksToRead} error={error} />
-        // </div>
         <div className="flex flex-wrap gap-6 mx-4 mt-4 justify-center">
-            {!booksToRead || booksToRead.length === 0 ? (
+            {booksToRead.length === 0 ? (
                 <p>No hay libros que quieras leer</p>
             ) : (
                 booksToRead.map((book) => (
-                    <GradientCard key={book.id} book={book} />
+                    <GradientCard
+                        key={book._id}
+                        book={book}
+                        handleButton={() => handleButton(book)}
+                        error={error}
+                    />
                 ))
             )}
         </div>
