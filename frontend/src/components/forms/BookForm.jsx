@@ -46,7 +46,11 @@ export function BookForm({ userId, setModalIsVisible, selectedBook, fetchBooks }
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await booksService.createBook(formData)
+            if (!selectedBook) {
+                await booksService.createBook(formData)
+            } else {
+                await booksService.updateBook(selectedBook.id, formData)
+            }
             setFormData(
                 {
                     title: "",
@@ -215,7 +219,7 @@ export function BookForm({ userId, setModalIsVisible, selectedBook, fetchBooks }
 
 
                 <div className="col-span-2 flex items-center justify-between gap-8">
-                    <AddButton handleAddButton={handleSubmit} text="Save book" style="bg-white border-2 border-orange-500 hover:bg-orange-500 transition text-orange-500 hover:text-white px-4 py-2 rounded w-full" type="submit" />
+                    <AddButton handleAddButton={handleSubmit} text={selectedBook ? "Update book" : "Save book"} style="bg-white border-2 border-orange-500 hover:bg-orange-500 transition text-orange-500 hover:text-white px-4 py-2 rounded w-full" type="submit" />
                     {selectedBook && (
                         <AddButton handleAddButton={handleDelete} text="Delete book" style="bg-white border-2 border-orange-500 hover:bg-orange-500 transition text-orange-500 hover:text-white px-4 py-2 rounded w-full" type="button" />
                     )}
