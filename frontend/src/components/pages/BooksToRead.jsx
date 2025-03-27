@@ -49,7 +49,7 @@ export function BooksToRead() {
                 booksToRead.map((book) => (
                     <>
                         <GradientCard
-                            key={book.id}
+                            key={book._id}
                             book={book}
                             handleButton={() => handleButton(book)}
                             error={error}
