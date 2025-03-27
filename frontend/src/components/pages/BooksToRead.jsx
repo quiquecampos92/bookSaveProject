@@ -46,15 +46,13 @@ export function BooksToRead() {
             {booksToRead.length === 0 ? (
                 <p>No hay libros que quieras leer</p>
             ) : (
-                booksToRead.map((book) => (
-                    <>
-                        <GradientCard
-                            key={book._id}
-                            book={book}
-                            handleButton={() => handleButton(book)}
-                            error={error}
-                        />
-                    </>
+                booksToRead.map((book, index) => (
+                    <GradientCard
+                        key={index}
+                        book={book}
+                        handleButton={() => handleButton(book)}
+                        error={error}
+                    />
                 ))
             )}
         </div>
