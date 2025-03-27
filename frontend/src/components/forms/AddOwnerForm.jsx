@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import usersService from '../../services/users';
 import { AddButton } from '../buttons/AddButton';
+import { HiMiniUserPlus } from "react-icons/hi2";
+
 
 export function AddOwnerForm({ userId }) {
     const [ownerName, setOwnerName] = useState('');
@@ -38,9 +40,9 @@ export function AddOwnerForm({ userId }) {
         }
     }, [error, success]);
     return (
-        <div className="bg-white shadow-md w-96 shadow-green-300 rounded-lg p-6">
+        <div className="bg-white shadow-md w-80 shadow-green-300 rounded-lg p-6">
             <h3 className="text-gray-700 text-2xl font-bold mb-4 text-center">Add Owner</h3>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-15">
+            <form onSubmit={handleSubmit} className="flex flex-col items-center gap-15">
                 <div className="flex flex-col gap-5">
                     <input
                         type="text"
@@ -48,10 +50,10 @@ export function AddOwnerForm({ userId }) {
                         value={ownerName}
                         placeholder="Enter new owner name"
                         onChange={(e) => setOwnerName(e.target.value)}
-                        className="bg-green-100 border-b-2 border-green-500 placeholder-slate-500 focus:border-zinc-50 focus:outline-none p-1 h-9"
+                        className="bg-green-100 w-72 border-b-2 border-green-500 placeholder-slate-500 focus:border-zinc-50 focus:outline-none p-1 h-9"
                     />
                 </div>
-                <AddButton type="submit" text="Add Owner" style="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 my-5 rounded" />
+                <AddButton type="submit" text="Add Owner" icon={<HiMiniUserPlus size={20} />} style="bg-orange-500 justify-center w-32 sm:w-40 hover:bg-orange-700 text-white font-bold py-2 px-4 mt-5 rounded" />
             </form>
             {error && <p className="text-red-500 mt-2" >{error}</p>}
             {success && <p className="text-green-500 mt-2" >{success}</p>}

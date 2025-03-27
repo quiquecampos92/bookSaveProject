@@ -4,6 +4,8 @@ import { Table } from "../dataComponents/Table.jsx";
 import { BookForm } from "../forms/BookForm.jsx";
 import { AddButton } from "../buttons/AddButton.jsx";
 import bookService from "../../services/books.js";
+import { HiDocumentPlus } from "react-icons/hi2";
+
 
 export function Home({ filteredBooks }) {
     const { user } = useContext(AuthContext);
@@ -50,10 +52,13 @@ export function Home({ filteredBooks }) {
     return (
         <div>
             <div className="flex items-center justify-between mx-16 pt-4">
-                <h1 className="text-3xl font-bold text-gray-500 drop-shadow-sm">
-                    Hola {user.name}, <span className="text-orange-400">¡Bienvenido!</span>
+                <h1 className="flex flex-row text-3xl font-bold text-gray-500 drop-shadow-sm">
+                    <span className="hidden sm:block">
+                        Hola {user.name},
+                    </span>
+                    <span className="text-orange-400">¡Bienvenido!</span>
                 </h1>
-                <AddButton handleAddButton={handleAddButton} text="Add new book" style="bg-white border-2 border-orange-500 hover:bg-orange-500 transition text-orange-500 hover:text-white px-4 py-2 rounded w-auto" type="text" />
+                <AddButton handleAddButton={handleAddButton} text="Add new book" style="bg-white sm:border-2 sm:border-orange-500 hover:bg-orange-500 transition text-orange-500 hover:text-white px-4 py-2 rounded w-auto" icon={<HiDocumentPlus size={25} />} type="text" />
             </div>
             {modalIsVisible && (
                 <div

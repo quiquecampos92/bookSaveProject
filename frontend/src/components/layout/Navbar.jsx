@@ -1,15 +1,18 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-
+import { HiHome } from "react-icons/hi2";
+import { HiBookmark } from "react-icons/hi2";
+import { HiBookmarkSlash } from "react-icons/hi2";
+import { HiMiniUsers } from "react-icons/hi2";
 
 export function Navbar() {
     const location = useLocation();
 
     const links = [
-        { name: 'HOME', path: '/books' },
-        { name: 'READ BOOKS', path: '/readbooks' },
-        { name: 'BOOKS TO READ', path: '/bookstoread' },
-        { name: 'BOOKS BY OWNERS', path: '/selectbooksbyowners' },
+        { name: 'HOME', path: '/books', icon: HiHome },
+        { name: 'READ BOOKS', path: '/readbooks', icon: HiBookmark },
+        { name: 'BOOKS TO READ', path: '/bookstoread', icon: HiBookmarkSlash },
+        { name: 'BOOKS BY OWNERS', path: '/selectbooksbyowners', icon: HiMiniUsers },
     ];
 
     return (
@@ -24,9 +27,10 @@ export function Navbar() {
                                     <li key={link.name} className="transform hover:scale-110 transition-transform duration-300">
                                         <Link
                                             to={link.path}
-                                            className={`hover:text-orange-500 pb-2 ${location.pathname === link.path ? "text-orange-500 font-bold border-b-2 border-orange-500 transition-colors duration-500" : "text-gray-500 transition-colors duration-300"}`}
+                                            className={`flex flex-row items-center gap-1 hover:text-orange-500 ${location.pathname === link.path ? "text-orange-500 font-bold border-b-2 border-orange-500 transition-colors duration-500" : "text-gray-500 transition-colors duration-300"}`}
                                         >
-                                            <span>{link.name}</span>
+                                            <link.icon className="inline-block w-8 h-8 sm:w-5 sm:h-5" />
+                                            <span className="sm:block hidden">{link.name}</span>
                                         </Link>
                                     </li>
                                 );

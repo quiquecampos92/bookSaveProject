@@ -5,6 +5,7 @@ import { UserOwners } from "../dataComponents/UserOwners.jsx"
 import { AddButton } from '../buttons/AddButton.jsx';
 import bookService from "../../services/books.js";
 import usersService from '../../services/users';
+import { HiMiniUserPlus } from "react-icons/hi2";
 
 export function SelectBooksByOwners({ filteredBooks }) {
     const { user } = useContext(AuthContext);
@@ -100,14 +101,14 @@ export function SelectBooksByOwners({ filteredBooks }) {
 
     return (
         <>
-            <div className="flex items-center justify-between mx-16 pt-4">
+            <div className="flex items-center justify-between mx-10 sm:mx-16 mt-4">
                 <form onSubmit={handleSubmit}>
                     <div>
                         <select
                             id="ownerName"
                             value={ownerName}
                             onChange={(e) => setOwnerName(e.target.value)}
-                            className={`border-2 rounded-md border-orange-500 hover:bg-orange-500 hover:text-white focus:outline-orange-500 p-1 h-9 
+                            className={`border-2 rounded-md text-xl sm:text-sm text-center border-orange-500 hover:bg-orange-500 hover:text-white focus:outline-orange-500 pr-1 h-10 
                             ${ownerName ? "text-orange-500" : "text-slate-500"}`}>
                             <option value={defaultOwnerName}>Select an owner</option>
                             {fullUser?.bookOwners.map(owner => (
@@ -116,7 +117,7 @@ export function SelectBooksByOwners({ filteredBooks }) {
                         </select>
                     </div>
                 </form>
-                <AddButton text="Manage Owners" handleAddButton={handleAddButton} style="bg-white border-2 border-orange-500 hover:bg-orange-500 transition text-orange-500 hover:text-white px-4 py-2 rounded w-auto" type="text" />
+                <AddButton text="Manage Owners" handleAddButton={handleAddButton} icon={<HiMiniUserPlus size={20} />} style="bg-white border-2 border-orange-500 hover:bg-orange-500 transition text-orange-500 hover:text-white px-4 py-2 rounded w-auto" type="text" />
             </div>
             {modalIsVisible && (
                 <div

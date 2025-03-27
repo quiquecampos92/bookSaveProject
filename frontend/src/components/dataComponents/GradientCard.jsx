@@ -1,5 +1,6 @@
 import React from 'react'
 import { AddButton } from "../buttons/AddButton.jsx";
+import { HiBookmark } from "react-icons/hi2";
 
 export function GradientCard({ book, handleButton, error }) {
 
@@ -9,7 +10,7 @@ export function GradientCard({ book, handleButton, error }) {
     }
 
     return (
-        <div className="relative w-full max-w-sm 2xl:max-w-lg rounded-lg border-2 border-green-500 bg-gradient-to-b hover:bg-gradient-to-t from-green-100 hover:scale-105 shadow-lg hover:shadow-xl transition-all duration-200 p-6">
+        <div className="relative w-full max-w-sm last:mb-10 rounded-lg border-2 border-green-500 bg-gradient-to-b hover:bg-gradient-to-t from-green-100 hover:scale-105 shadow-lg hover:shadow-xl transition-all duration-200 p-6">
             <div className="text-center">
                 <h5 className="text-xl font-bold text-gray-700">
                     {capitalize(book.title)}
@@ -31,6 +32,7 @@ export function GradientCard({ book, handleButton, error }) {
                     handleAddButton={handleButton}
                     text="Marcar como leído"
                     style="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition"
+                    icon={<HiBookmark size={20} />}
                     type="text"
                 />
             </div>
