@@ -1,8 +1,13 @@
 import apiClient from './apiClient';
 
 const getAllBooks = async () => {
-    const response = await apiClient.get('/books');
-    return response.data;
+    try {
+        const response = await apiClient.get('/books');
+        return response.data;
+    } catch (error) {
+        console.error("Error getting books:", error.response?.data || error.message);
+        return [];
+    }
 };
 
 const getFilteredBooks = async (searchTerm) => {
@@ -17,8 +22,13 @@ const getFilteredBooks = async (searchTerm) => {
 
 
 const createBook = async (newBook) => {
-    const response = await apiClient.post('/books', newBook);
-    return response.data;
+    try {
+        const response = await apiClient.post('/books', newBook);
+        return response.data;
+    } catch (error) {
+        console.error("Error creando el libro:", error);
+        return [];
+    }
 };
 
 const updateBook = async (id, modifiedBook) => {

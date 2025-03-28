@@ -10,8 +10,14 @@ const getUser = async (userId) => {
 };
 
 const createUser = async (userData) => {
-    const response = await apiClient.post('/users', userData);
-    return response.data;
+    try {
+        const response = await apiClient.post('/users', userData);
+        return response.data;
+    } catch (error) {
+        console.error("Error creating user:", error.response?.data || error.message);
+        return [];
+    }
+
 };
 
 const createOwner = async (ownerName, userId) => {
