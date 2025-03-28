@@ -16,14 +16,19 @@ booksRouter.get('/', async (request, response) => {
 
 // Obtener un libro específico
 booksRouter.get('/:id', async (request, response) => {
-    const bookId = request.params.id
-    const book = await Book.findById(bookId)
+    try {
+        const bookId = request.params.id
+        const book = await Book.findById(bookId)
 
 
-    if (book) {
-        response.json(book.reverse())
-    } else {
-        response.status(404).end()
+        if (book) {
+            response.json(book.reverse())
+        } else {
+            response.status(404).end()
+        }
+    } catch (error) {
+        console.log(error)
+        response.status(400).json({ error: 'something went wrong' })
     }
 })
 
@@ -57,57 +62,64 @@ booksRouter.get('/search/:searchTerm', async (request, response) => {
 
 // Crear un nuevo libro
 booksRouter.post('/', async (request, response) => {
-    const { title, author, points, review, reading_Date, owner, read, price } = request.body
-    const userId = request.user.id // Usuario autenticado adjunto por authMiddleware
-    const user = await User.findById(userId)
+    try {
 
-    if (!title || !points || read === undefined || price === undefined) {
-        return response.status(400).json({ error: 'title, points, read and price are required' });
+
+        const { title, author, points, review, reading_Date, owner, read, price } = request.body
+        const userId = request.user.id // Usuario autenticado adjunto por authMiddleware
+        const user = await User.findById(userId)
+
+        if (!title || !points || read === undefined || price === undefined) {
+            return response.status(400).json({ error: 'title, points, read and price are required' });
+        }
+
+        const book = new Book({
+            title,
+            author,
+            points,
+            review,
+            reading_Date,
+            owner,
+            read,
+            price,
+            user: userId
+        })
+
+        const savedBook = await book.save()
+        user.books = user.books.concat(savedBook._id)
+        await user.save()
+
+        response.status(201).json(savedBook)
+    } catch (error) {
+        console.error(error)
+        response.status(500).json({ message: 'Internal server error' })
     }
-
-    const book = new Book({
-        title,
-        author,
-        points,
-        review,
-        reading_Date,
-        owner,
-        read,
-        price,
-        user: userId
-    })
-
-    const savedBook = await book.save()
-    user.books = user.books.concat(savedBook._id)
-    await user.save()
-
-    response.status(201).json(savedBook)
 })
 
 // Eliminar un libro
 booksRouter.delete('/:id', async (request, response) => {
-    const bookId = request.params.id
-    await Book.findByIdAndDelete(bookId)
-    response.status(204).end()
+    try {
+        const bookId = request.params.id
+        await Book.findByIdAndDelete(bookId)
+        response.status(204).end()
+    } catch (error) {
+        console.error(error)
+        response.status(500).json({ message: 'Internal server error' })
+    }
 })
 
 // Actualizar un libro
 booksRouter.put('/:id', async (request, response) => {
-    const body = request.body
+    try {
+        const bookId = request.params.id
+        const body = request.body
 
-    const book = {
-        title: body.title,
-        author: body.author,
-        points: body.points,
-        review: body.review,
-        reading_Date: body.reading_Date,
-        owner: body.owner,
-        read: body.read,
-        price: body.price
+        const updatedBook = await Book.findByIdAndUpdate(bookId, body, { new: true })
+        response.json(updatedBook)
+    } catch (error) {
+        console.error(error)
+        response.status(500).json({ message: 'Internal server error' })
     }
-
-    const updatedBook = await Book.findByIdAndUpdate(request.params.id, book, { new: true })
-    response.json(updatedBook)
 })
 
 module.exports = booksRouter
