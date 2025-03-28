@@ -9,6 +9,7 @@ const middleware = require('./utils/middleware')
 const loginRouter = require('./controllers/loginController')
 const usersRouter = require('./controllers/usersController')
 const booksRouter = require('./controllers/booksController')
+const path = require('path')
 
 const app = express()
 console.log('MONGODB_URI:', config.MONGODB_URI) // Verifica el valor
@@ -35,5 +36,10 @@ app.use('/api/books', booksRouter)
 
 app.use(middleware.unknownEndpoint)//si la ruta no existe
 app.use(middleware.errorHandler)//manejador de errores varios
+
+// Servir index.html para cualquier otra ruta (React Router)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 module.exports = app
