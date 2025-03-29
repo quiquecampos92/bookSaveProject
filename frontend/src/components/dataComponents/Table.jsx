@@ -149,11 +149,11 @@ export function Table({ userId, fetchBooks, filteredBooks, columns, modalIsVisib
                         <MobileAccordion key={book._id || book.id} title={book.title}>
                             <div
                                 onClick={() => handleBookClick(book)}
-                                className="cursor-pointer bg-white hover:bg-green-50 border border-green-500 rounded-lg shadow-md shadow-green-200 p-4 transition-all duration-300"
+                                className="cursor-pointer bg-white hover:bg-green-50 border border-orange-500 rounded-lg shadow-md shadow-green-200 p-4 transition-all duration-300"
                             >
-                                <h1 className="text-lg font-bold text-green-500">
+                                {/* <h1 className="text-lg font-bold text-green-500">
                                     <span className="text-orange-500">Title:</span> {book.title}
-                                </h1>
+                                </h1> */}
 
                                 <h4 className="text-md">
                                     <span className="font-semibold text-green-500">Author:</span> {book.author}
@@ -194,11 +194,11 @@ export function Table({ userId, fetchBooks, filteredBooks, columns, modalIsVisib
                         <MobileAccordion key={book._id || book.id} title={book.title}>
                             <div
                                 onClick={() => handleBookClick(book)}
-                                className="cursor-pointer bg-white hover:bg-green-50 border border-green-500 rounded-lg shadow-md shadow-green-200 p-4 transition-all duration-300"
+                                className="cursor-pointer bg-white hover:bg-green-50 border border-orange-500 rounded-lg shadow-md shadow-green-200 p-4 transition-all duration-300"
                             >
-                                <h1 className="text-lg font-bold text-green-500">
+                                {/* <h1 className="text-lg font-bold text-green-500">
                                     <span className="text-orange-500">Title:</span> {book.title}
-                                </h1>
+                                </h1> */}
 
                                 <h4 className="text-md">
                                     <span className="font-semibold text-green-500">Author:</span> {book.author}
