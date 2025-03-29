@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { GradientCard } from "../dataComponents/GradientCard.jsx";
 import booksService from "../../services/books.js";
 
-export function BooksToRead() {
+export function BooksToRead({ filteredBooks }) {
     const [booksToRead, setBooksToRead] = useState([]);
     const [error, setError] = useState("");
 

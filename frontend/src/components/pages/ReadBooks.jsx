@@ -3,7 +3,7 @@ import { AuthContext } from "../../AuthContext";
 import { Table } from "../dataComponents/Table.jsx";
 import bookService from "../../services/books.js";
 
-export function ReadBooks() {
+export function ReadBooks({ filteredBooks }) {
     const { user } = useContext(AuthContext);
     const [readBooks, setReadBooks] = useState([]);
     const [error, setError] = useState("");
@@ -41,11 +41,9 @@ export function ReadBooks() {
         fetchBooks();
     }, []);
 
-    const filter = (book) => book.read;
-
     return (
         <div>
-            <Table userId={user.id} fetchBooks={fetchBooks} columns={columns} books={readBooks} error={error} />
+            <Table userId={user.id} fetchBooks={fetchBooks} filteredBooks={filteredBooks} columns={columns} books={readBooks} error={error} />
         </div>
     );
 }
