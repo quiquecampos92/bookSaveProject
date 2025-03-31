@@ -9,7 +9,7 @@ booksRouter.use(authMiddleware)
 // Obtener todos los libros del usuario autenticado
 booksRouter.get('/', async (request, response) => {
     const userId = request.user.id // Usuario autenticado adjunto por authMiddleware
-    const books = await Book.find({ user: userId }).populate('user', { username: 1, name: 1 })
+    const books = await Book.find({ user: userId })
 
     response.json(books.reverse())
 })
@@ -63,8 +63,6 @@ booksRouter.get('/search/:searchTerm', async (request, response) => {
 // Crear un nuevo libro
 booksRouter.post('/', async (request, response) => {
     try {
-
-
         const { title, author, points, review, reading_Date, owner, read, price } = request.body
         const userId = request.user.id // Usuario autenticado adjunto por authMiddleware
         const user = await User.findById(userId)
@@ -113,7 +111,7 @@ booksRouter.put('/:id', async (request, response) => {
     try {
         const bookId = request.params.id
         const body = request.body
-
+        console.log('hasta aqui entra bien', body, bookId);
         const updatedBook = await Book.findByIdAndUpdate(bookId, body, { new: true })
         response.json(updatedBook)
     } catch (error) {
