@@ -11,6 +11,7 @@ import { Login } from "./components/pages/Login";
 import { Signup } from "./components/pages/Signup";
 import { AuthProvider, AuthContext } from "./AuthContext";
 import { PrivateRoute } from "./PrivateRoute";
+import { NotFound } from "./components/pages/NotFound";
 
 function AppRoutes() {
   const { user } = useContext(AuthContext); // Ahora dentro del contexto correcto
@@ -54,6 +55,7 @@ function AppRoutes() {
           </Layout>
         </PrivateRoute>
       } />
+    <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
