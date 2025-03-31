@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-    baseURL: "https://booksaveproject.onrender.com/api",
+    baseURL: "/api",
 });
 
 // Interceptor de solicitud: Agrega el token al encabezado
