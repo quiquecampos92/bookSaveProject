@@ -30,7 +30,6 @@ export function GradientCard({ book, handleButton, error }) {
                 </p>
             </div>
 
-            {/* Botón */}
             <div className="flex justify-center  mt-5">
                 <AddButton
                     handleAddButton={handleButton}
