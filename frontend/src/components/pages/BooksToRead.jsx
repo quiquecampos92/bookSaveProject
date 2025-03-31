@@ -43,9 +43,16 @@ export function BooksToRead({ filteredBooks }) {
 
     return (
         <div className="flex flex-wrap gap-6 mx-4 mt-4 justify-center">
-            {booksToRead.length === 0 ? (
-                <p>No hay libros que quieras leer</p>
-            ) : (
+            {filteredBooks && filteredBooks.length > 0 ? (
+                filteredBooks.map((book, index) => (
+                    <GradientCard
+                        key={index}
+                        book={book}
+                        handleButton={() => handleButton(book)}
+                        error={error}
+                    />
+                ))
+            ) : booksToRead.length > 0 ? (
                 booksToRead.map((book, index) => (
                     <GradientCard
                         key={index}
@@ -54,7 +61,12 @@ export function BooksToRead({ filteredBooks }) {
                         error={error}
                     />
                 ))
+            ) : (
+                <p className="text-lg font-semibold text-gray-500 mt-4">
+                    No hay libros que quieras leer.
+                </p>
             )}
         </div>
     );
+
 }
