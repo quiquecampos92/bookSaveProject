@@ -25,7 +25,13 @@ mongoose.connect(config.MONGODB_URI)
     })
 
 app.use(cors())//para evitar problemas con el frontend
-app.use(express.static('dist'))//para integrar el frontend con el backend
+// app.use(express.static('dist'))//para integrar el frontend con el backend
+
+
+// Servir archivos estáticos desde la carpeta dist
+app.use(express.static(path.join(__dirname, "dist")));
+
+
 app.use(express.json())//para trabajar con archivos json
 app.use(middleware.requestLogger)//informa de los datos de las solicitudes
 
@@ -34,12 +40,17 @@ app.use('/api/login', loginRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/books', booksRouter)
 
+// Servir index.html para cualquier otra ruta (React Router)
+app.get('*', (req, res, next) => {
+  if (!req.originalUrl.startsWith('/api')) {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'))
+  } else {
+    next()
+  }
+})
+
 app.use(middleware.unknownEndpoint)//si la ruta no existe
 app.use(middleware.errorHandler)//manejador de errores varios
 
-// Servir index.html para cualquier otra ruta (React Router)
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
 
 module.exports = app
