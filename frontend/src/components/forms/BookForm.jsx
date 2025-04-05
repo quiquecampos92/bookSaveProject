@@ -114,143 +114,132 @@ export function BookForm({ userId, setModalIsVisible, selectedBook, fetchBooks }
     };
 
     return (
-        loading ? (
-            <div className="flex items-center justify-center h-screen">
-                <p className="text-white">Loading...</p>
-            </div>
-        ) : (
-            user && Array.isArray(user.bookOwners) && user.bookOwners.length > 0 ? (
-                <div className="max-w-2xl mx-auto bg-green-600 w-full py-5 px-8 rounded-lg shadow-md max-h-screen overflow-auto">
-                    <h2 className="text-2xl font-semibold text-white text-center">
-                        Save a book
-                    </h2>
-                    {errorMessage && <p className="text-red-500 text-center break-words">{errorMessage}</p>}
-                    <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-3">
-                        <div className="col-span-2">
-                            <label className="block text-white">Title</label>
-                            <input
-                                type="text"
-                                name="title"
-                                value={formData.title}
-                                onChange={handleChange}
-                                required
-                                className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
-                            />
-                        </div>
+        <div className="max-w-2xl mx-auto bg-green-600 w-full py-5 px-8 rounded-lg shadow-md max-h-screen overflow-auto">
+            <h2 className="text-2xl font-semibold text-white text-center">
+                Save a book
+            </h2>
+            {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
 
-                        <div className="col-span-2">
-                            <label className="block text-white">Author</label>
-                            <input
-                                type="text"
-                                name="author"
-                                value={formData.author}
-                                onChange={handleChange}
-                                className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-white">Owner</label>
-                            <select
-                                id="ownerName"
-                                name="owner"
-                                value={formData.owner}
-                                onChange={(e) => setFormData({ ...formData, owner: e.target.value })}
-                                className="w-full h-10 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
-                            >
-
-                                <option value="">Select an owner</option>
-                                {user && user.bookOwners ? (
-                                    user.bookOwners.map(owner => (
-                                        <option key={owner} value={owner}>{owner}</option>
-                                    ))
-                                ) : (
-                                    <option disabled>Loading owners...</option>
-                                )}
-                            </select>
-
-                        </div>
-
-                        <div>
-                            <label className="block text-white">Reading Date</label>
-                            <input
-                                type="date"
-                                name="reading_Date"
-                                value={formData.reading_Date}
-                                onChange={handleChange}
-                                className="w-full h-10 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-white">Points (1-5)</label>
-                            <input
-                                type="number"
-                                name="points"
-                                value={formData.points}
-                                onChange={handleChange}
-                                min="1"
-                                max="5"
-                                required
-                                className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-white">Price</label>
-                            <input
-                                type="number"
-                                name="price"
-                                value={formData.price}
-                                onChange={handleChange}
-                                min="0"
-                                required
-                                className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
-                            />
-                        </div>
-
-                        <div className="col-span-2">
-                            <label className="block text-white">Review</label>
-                            <textarea
-                                name="review"
-                                value={formData.review}
-                                onChange={handleChange}
-                                required
-                                className="w-full h-24 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
-                            ></textarea>
-                        </div>
-
-                        <div className="col-span-2 flex items-center justify-between p-3">
-                            <label htmlFor="read" className="text-white font-semibold">Have you read this book?</label>
-                            <label className="relative inline-flex items-center cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="read"
-                                    id="read"
-                                    checked={formData.read}
-                                    onChange={handleChange}
-                                    className="sr-only peer"
-                                />
-                                <div className="w-10 h-5 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-orange-500 rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-orange-500"></div>
-                            </label>
-                        </div>
-
-                        <div className="col-span-2 flex items-center justify-between gap-8">
-                            <AddButton handleAddButton={handleSubmit} icon={<HiBookmark size={25} />} text={selectedBook ? "Update book" : "Save book"} style="bg-white border-2 justify-center border-orange-500 hover:bg-orange-500 transition text-orange-500 hover:text-white px-4 py-2 rounded w-full" type="submit" />
-                            {selectedBook && (
-                                <AddButton handleAddButton={handleDelete} icon={<HiTrash size={25} />} text="Delete book" style="bg-white border-2 justify-center border-orange-500 hover:bg-orange-500 transition text-orange-500 hover:text-white px-4 py-2 rounded w-full" type="button" />
-                            )}
-                        </div>
-                    </form>
+            <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-3">
+                <div className="col-span-2">
+                    <label className="block text-white">Title</label>
+                    <input
+                        type="text"
+                        name="title"
+                        value={formData.title}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
+                    />
                 </div>
-            ) : (
-                <div className='flex flex-col gap-4'>
-                    <h1 className="bg-white sm:border-2 sm:border-orange-500 text-orange-500 px-4 py-2 rounded w-auto">
-                        First, you need to add an owner
-                    </h1>
-                    <AddOwnerForm userId={userId} />
+
+                <div className="col-span-2">
+                    <label className="block text-white">Author</label>
+                    <input
+                        type="text"
+                        name="author"
+                        value={formData.author}
+                        onChange={handleChange}
+                        className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
+                    />
                 </div>
-            )
-        )
-    )
+
+                <div>
+                    <label className="block text-white">Owner</label>
+                    <select
+                        id="ownerName"
+                        name="owner"
+                        value={formData.owner}
+                        onChange={(e) => setFormData({ ...formData, owner: e.target.value })}
+                        className="w-full h-10 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
+                    >
+
+                        <option value="">Select an owner</option>
+                        {user && user.bookOwners ? (
+                            user.bookOwners.map(owner => (
+                                <option key={owner} value={owner}>{owner}</option>
+                            ))
+                        ) : (
+                            <option disabled>Loading owners...</option>
+                        )}
+                    </select>
+
+                </div>
+
+                <div>
+                    <label className="block text-white">Reading Date</label>
+                    <input
+                        type="date"
+                        name="reading_Date"
+                        value={formData.reading_Date}
+                        onChange={handleChange}
+                        className="w-full h-10 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-white">Points (1-5)</label>
+                    <input
+                        type="number"
+                        name="points"
+                        value={formData.points}
+                        onChange={handleChange}
+                        min="1"
+                        max="5"
+                        required
+                        className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
+                    />
+                </div>
+
+
+
+                <div>
+                    <label className="block text-white">Price</label>
+                    <input
+                        type="number"
+                        name="price"
+                        value={formData.price}
+                        onChange={handleChange}
+                        min="0"
+                        required
+                        className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
+                    />
+                </div>
+
+                <div className="col-span-2">
+                    <label className="block text-white">Review</label>
+                    <textarea
+                        name="review"
+                        value={formData.review}
+                        onChange={handleChange}
+                        required
+                        className="w-full h-24 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg text-green-600"
+                    ></textarea>
+                </div>
+
+                <div className="col-span-2 flex items-center justify-between p-3">
+                    <label htmlFor="read" className="text-white font-semibold">Have you read this book?</label>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                        <input
+                            type="checkbox"
+                            name="read"
+                            id="read"
+                            checked={formData.read}
+                            onChange={handleChange}
+                            className="sr-only peer"
+                        />
+                        <div className="w-10 h-5 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-orange-500 rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-orange-500"></div>
+                    </label>
+                </div>
+
+
+                <div className="col-span-2 flex items-center justify-between gap-8">
+                    <AddButton handleAddButton={handleSubmit} icon={<HiBookmark size={25} />} text={selectedBook ? "Update book" : "Save book"} style="bg-white border-2 justify-center border-orange-500 hover:bg-orange-500 transition text-orange-500 hover:text-white px-4 py-2 rounded w-full" type="submit" />
+                    {selectedBook && (
+                        <AddButton handleAddButton={handleDelete} icon={<HiTrash size={25} />} text="Delete book" style="bg-white border-2 justify-center border-orange-500 hover:bg-orange-500 transition text-orange-500 hover:text-white px-4 py-2 rounded w-full" type="button" />
+                    )}
+                </div>
+            </form>
+        </div>
+    );
 }
