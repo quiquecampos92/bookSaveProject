@@ -97,14 +97,30 @@ booksRouter.post('/', async (request, response) => {
 // Eliminar un libro
 booksRouter.delete('/:id', async (request, response) => {
     try {
-        const bookId = request.params.id
-        await Book.findByIdAndDelete(bookId)
-        response.status(204).end()
+        const bookId = request.params.id;
+
+        // Encuentra el libro para obtener el userId
+        const book = await Book.findById(bookId);
+        if (!book) {
+            return response.status(404).json({ message: "Libro no encontrado" });
+        }
+
+        // Elimina el libro de la base de datos
+        await Book.findByIdAndDelete(bookId);
+
+        // Elimina la referencia del libro en el usuario
+        await User.updateOne(
+            { _id: book.user },  // Busca el usuario dueño del libro
+            { $pull: { books: bookId } } // Elimina el ID del libro en el array `books`
+        );
+
+        response.status(204).end();
     } catch (error) {
-        console.error(error)
-        response.status(500).json({ message: 'Internal server error' })
+        console.error(error);
+        response.status(500).json({ message: "Internal server error" });
     }
-})
+});
+
 
 // Actualizar un libro
 booksRouter.put('/:id', async (request, response) => {
