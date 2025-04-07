@@ -26,7 +26,6 @@ let bookSchema = new mongoose.Schema({
     },
     reading_Date: {
         type: Date,
-        default: Date.now
     },
     owner: {
         type: String,
