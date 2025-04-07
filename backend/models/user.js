@@ -17,13 +17,25 @@ let userSchema = new mongoose.Schema({
             default: [],
         }
     ],
+    email: {
+        type: String,
+        unique: true,
+        required: true,
+        sparse: true // en caso de no ser obligatorio
+    },
+    role: {
+        type: String,
+        enum: ['guest', 'user', 'admin', 'superadmin'],
+        default: 'user'
+    },    
     books: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Book'
         }
     ],
-})
+},
+{ timestamps: true })
 
 userSchema.set('toJSON', {
     transform: (document, returnedObject) => {

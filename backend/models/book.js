@@ -25,7 +25,8 @@ let bookSchema = new mongoose.Schema({
         minlength: 10
     },
     reading_Date: {
-        type: String,
+        type: Date,
+        default: Date.now
     },
     owner: {
         type: String,
@@ -44,7 +45,8 @@ let bookSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
-})
+},
+{ timestamps: true })
 
 bookSchema.set('toJSON', {
     transform: (document, returnedObject) => {
