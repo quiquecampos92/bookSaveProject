@@ -25,7 +25,7 @@ let bookSchema = new mongoose.Schema({
         minlength: 10
     },
     reading_Date: {
-        type: Date,
+        type: String,
     },
     owner: {
         type: String,
