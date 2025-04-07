@@ -48,32 +48,42 @@ export function BookForm({ userId, setModalIsVisible, selectedBook, fetchBooks }
         e.preventDefault();
         try {
             if (!selectedBook) {
-                await booksService.createBook(formData)
+                await booksService.createBook(formData);
             } else {
-                await booksService.updateBook(selectedBook.id, formData)
+                await booksService.updateBook(selectedBook.id, formData);
             }
-            setFormData(
-                {
-                    title: "",
-                    author: "",
-                    points: 1,
-                    review: "",
-                    reading_Date: "",
-                    owner: "",
-                    read: false,
-                    price: 0,
-                }
-            )
-            setModalIsVisible(false)
+            setFormData({
+                title: "",
+                author: "",
+                points: 1,
+                review: "",
+                reading_Date: "",
+                owner: "",
+                read: false,
+                price: 0,
+            });
+            setModalIsVisible(false);
             fetchBooks();
-        }
-        catch (error) {
-            setErrorMessage('Algo ha salido mal. No se ha podido registrar el libro');
+        } catch (error) {
+            console.error("Error saving book:", error);
+            let errorMsg = error.response.data.details.message;
+            if (error.response.data.details.review) {
+                errorMsg = "Review is shorter than 10 characters.";
+            }
+            if (error.response.data.details.author) {
+                errorMsg = "Author is shorter than 2 characters.";
+            }
+            if (error.response.data.details.required) {
+                errorMsg = "There are fields required as title author or review.";
+            }
+
+            setErrorMessage(errorMsg);
             setTimeout(() => {
                 setErrorMessage(null);
             }, 5000);
         }
     };
+
     const handleDelete = async () => {
         try {
             await booksService.deleteBook(selectedBook.id);
@@ -105,7 +115,7 @@ export function BookForm({ userId, setModalIsVisible, selectedBook, fetchBooks }
                 <h2 className="text-2xl font-semibold text-white text-center">
                     Save a book
                 </h2>
-                {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
+                {errorMessage && <p className="text-red-500 text-center break-words">{errorMessage}</p>}
                 <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-3">
                     <div className="col-span-2">
                         <label className="block text-white">Title</label>

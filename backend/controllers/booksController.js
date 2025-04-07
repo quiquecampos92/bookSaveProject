@@ -63,12 +63,26 @@ booksRouter.get('/search/:searchTerm', async (request, response) => {
 // Crear un nuevo libro
 booksRouter.post('/', async (request, response) => {
     try {
-        const { title, author, points, review, reading_Date, owner, read, price } = request.body
-        const userId = request.user.id // Usuario autenticado adjunto por authMiddleware
-        const user = await User.findById(userId)
+        const { title, author, points, review, reading_Date, owner, read, price } = request.body;
+        const userId = request.user.id;
+        const user = await User.findById(userId);
 
-        if (!title || !points || read === undefined || price === undefined) {
-            return response.status(400).json({ error: 'title, points, read and price are required' });
+        // Validación más detallada
+        const missingFields = [];
+        if (!title) missingFields.push('title');
+        if (points === undefined) missingFields.push('points');
+        if (read === undefined) missingFields.push('read');
+        if (price === undefined) missingFields.push('price');
+
+        if (missingFields.length > 0) {
+            return response.status(400).json({
+                error: 'Missing required fields',
+                details: {
+                    required: true,
+                    message: `The following fields are required: ${missingFields.join(', ')}`,
+                    fields: missingFields
+                }
+            });
         }
 
         const book = new Book({
@@ -81,18 +95,36 @@ booksRouter.post('/', async (request, response) => {
             read,
             price,
             user: userId
-        })
+        });
 
-        const savedBook = await book.save()
-        user.books = user.books.concat(savedBook._id)
-        await user.save()
+        const savedBook = await book.save();
+        user.books = user.books.concat(savedBook._id);
+        await user.save();
 
-        response.status(201).json(savedBook)
+        response.status(201).json(savedBook);
     } catch (error) {
-        console.error(error)
-        response.status(500).json({ message: 'Internal server error' })
+        console.error(error);
+
+        if (error.name === 'ValidationError') {
+            const details = {};
+            for (const field in error.errors) {
+                details[field] = error.errors[field].message;
+            }
+            return response.status(400).json({
+                error: 'Validation failed',
+                details
+            });
+        }
+
+        response.status(500).json({
+            error: 'Internal server error',
+            details: {
+                message: error.message || 'An unexpected error occurred'
+            }
+        });
     }
-})
+});
+
 
 // Eliminar un libro
 booksRouter.delete('/:id', async (request, response) => {
