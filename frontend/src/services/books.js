@@ -20,25 +20,14 @@ const getFilteredBooks = async (searchTerm) => {
     }
 };
 
-
 const createBook = async (newBook) => {
-    try {
-        const response = await apiClient.post('/books', newBook);
-        return response.data;
-    } catch (error) {
-        console.error("Error creando el libro:", error);
-        return [];
-    }
+    const response = await apiClient.post('/books', newBook);
+    return response.data;
 };
 
-const updateBook = async (id, modifiedBook) => {
-    try {
-        const response = await apiClient.put(`/books/${id}`, modifiedBook);
-        return response.data;
-    } catch (error) {
-        console.error("Error actualizando el libro:", error);
-        return [];
-    }
+const updateBook = async (id, bookData) => {
+    const response = await apiClient.put(`/books/${id}`, bookData);
+    return response.data;
 };
 
 const deleteBook = async (id) => {
