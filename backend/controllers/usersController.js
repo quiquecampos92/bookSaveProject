@@ -24,7 +24,7 @@ usersRouter.get('/:id', async (request, response) => {
 
 
 usersRouter.post('/', async (request, response) => {
-    const { username, name, lastName, password } = request.body;
+    const { username, email, name, lastName, password } = request.body;
 
     if (!username || !name || !lastName || !password) {
         return response.status(400).json({ error: 'All fields are required' });
@@ -34,12 +34,13 @@ usersRouter.post('/', async (request, response) => {
     const passwordHash = await bcrypt.hash(password, saltRounds);
 
     const user = new User({
-        username,
-        name,
-        lastName,
+        username: username.trim().toLowerCase(),
+        email: email.trim().toLowerCase(),
+        name: name.trim(),
+        lastName: lastName.trim(),
         passwordHash
     });
-
+    
     try {
         const savedUser = await user.save();
         response.status(201).json(savedUser);
