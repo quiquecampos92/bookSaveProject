@@ -236,7 +236,7 @@ export function BookForm({ userId, setModalIsVisible, selectedBook, fetchBooks }
             </div>
         ) : (
             <div className='flex flex-col gap-4'>
-                <h1 class="bg-white sm:border-2 sm:border-orange-500 text-orange-500 px-4 py-2 rounded w-auto">
+                <h1 className="bg-white sm:border-2 sm:border-orange-500 text-orange-500 px-4 py-2 rounded w-auto">
                     First, you need to add an owner
                 </h1>
                 <AddOwnerForm userId={userId} />
