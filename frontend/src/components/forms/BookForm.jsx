@@ -119,7 +119,7 @@ export function BookForm({ userId, setModalIsVisible, selectedBook, fetchBooks }
                 <h2 className="text-2xl font-semibold text-white text-center">
                     Save a book
                 </h2>
-                {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
+                {errorMessage && <p className="text-red-500 text-center break-words">{errorMessage}</p>}
                 <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-3">
                     <div className="col-span-2">
                         <label className="block text-white">Title</label>
@@ -191,8 +191,6 @@ export function BookForm({ userId, setModalIsVisible, selectedBook, fetchBooks }
                         />
                     </div>
 
-
-
                     <div>
                         <label className="block text-white">Price</label>
                         <input
@@ -232,7 +230,6 @@ export function BookForm({ userId, setModalIsVisible, selectedBook, fetchBooks }
                         </label>
                     </div>
 
-
                     <div className="col-span-2 flex items-center justify-between gap-8">
                         <AddButton handleAddButton={handleSubmit} icon={<HiBookmark size={25} />} text={selectedBook ? "Update book" : "Save book"} style="bg-white border-2 justify-center border-orange-500 hover:bg-orange-500 transition text-orange-500 hover:text-white px-4 py-2 rounded w-full" type="submit" />
                         {selectedBook && (
@@ -243,7 +240,7 @@ export function BookForm({ userId, setModalIsVisible, selectedBook, fetchBooks }
             </div>
         ) : (
             <div className='flex flex-col gap-4'>
-                <h1 class="bg-white sm:border-2 sm:border-orange-500 text-orange-500 px-4 py-2 rounded w-auto">
+                <h1 className="bg-white sm:border-2 sm:border-orange-500 text-orange-500 px-4 py-2 rounded w-auto">
                     First, you need to add an owner
                 </h1>
                 <AddOwnerForm userId={userId} />
