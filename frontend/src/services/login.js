@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-import axios from 'axios'
-const baseUrl = '/login'
-=======
 import apiClient from './apiClient';  
->>>>>>> fae9d41 (fix baseUrl  in login-service)
 
 const baseUrl = '/login';  
 const login = async (credentials) => {
