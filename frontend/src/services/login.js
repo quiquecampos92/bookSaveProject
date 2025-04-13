@@ -1,14 +1,19 @@
+<<<<<<< HEAD
 import axios from 'axios'
 const baseUrl = '/login'
+=======
+import apiClient from './apiClient';  
+>>>>>>> fae9d41 (fix baseUrl  in login-service)
 
-const login = async credentials => {
+const baseUrl = '/login';  
+const login = async (credentials) => {
     try {
-        const response = await axios.post(baseUrl, credentials)
-        return response.data
+        const response = await apiClient.post(baseUrl, credentials);
+        return response.data;
     } catch (error) {
         console.error("Error logging in:", error.response?.data || error.message);
         return null;
     }
 }
 
-export default { login }
+export default { login };
