@@ -22,7 +22,7 @@ Aplicación web para guardar, gestionar y visualizar libros que son de tu inter�
 
 ## 🌐 Demo
 
-Puedes probar la app aquí 👉 [bookSaveProject](https://booksaveproject.onrender.com/)
+Puedes probar la app aquí 👉 [Book Save](https://book-save-project.vercel.app/)
 
 ---
 
@@ -48,7 +48,7 @@ Puedes probar la app aquí 👉 [bookSaveProject](https://booksaveproject.onrend
 ### 🚀 Despliegue - Hosting
 | Parte       | Plataforma |
 |-------------|------------|
-| 🌍 Frontend | Render     |
+| 🌍 Frontend | Vercel     |
 | 🔧 Backend  | Render     |
 | 🛢️ Base de datos  | MongoDB Atlas     |
 
@@ -64,8 +64,6 @@ Puedes probar la app aquí 👉 [bookSaveProject](https://booksaveproject.onrend
 | POST   | `/api/users`        | Registro de nuevo usuario       |
 | POST   | `/api/users/:id/owners`| Registro de nuevo owner      |
 | DELETE | `/api/users/:id/owners/:ownerName`| Eliminar un owner |
-
-
 | GET    | `/api/books`   | Obtener todos los libros del usuario |
 | GET    | `/api/books/search/:searchTerm`| Obtener libro filtrado |
 | POST   | `/api/books`        | Añadir un nuevo libro           |
