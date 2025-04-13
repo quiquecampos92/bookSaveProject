@@ -1,8 +1,10 @@
 import axios from "axios";
 
-const apiClient = axios.create({
-    baseURL: "/api",
-});
+const baseURL = import.meta.env.MODE === "development"
+    ? import.meta.env.VITE_API_URL_LOCA
+    : import.meta.env.VITE_API_URL;
+
+const apiClient = axios.create({ baseURL });
 
 // Interceptor de solicitud: Agrega el token al encabezado
 apiClient.interceptors.request.use(
